@@ -98,7 +98,7 @@ sub fill_template {
 	return $result;
 }
 
-while (<>) {
+while (<STDIN>) {
 	try {
 		my $url = $_;
 		chomp($url);
