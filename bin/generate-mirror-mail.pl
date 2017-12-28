@@ -10,6 +10,29 @@ use Try::Tiny;
 
 use Data::Dumper;
 
+=head1 NAME
+
+generate-mirror-mail.pl - Generate notification mails for broken mirrors
+
+=head1 DESCRIPTION
+
+Run the script and pass it URLs to the archweb mirror page (e.g.
+<https://www.archlinux.org/mirrors/melbourneitmirror.net/>) via STDIN. If the
+mirror has a problem the script will generate an appropriate mail and run
+`compose-mail-from-stdin` which should be a script that starts your favourite
+mail client with the mail. The mail is currently not complete so it cannot be
+sent automatically.
+
+Missing from the mail are:
+
+ - the recipient addresses
+ - the links to the details pages of the problematic mirror URLs
+
+=cut
+
+# TODO: put this in a config file
+my $sender = 'bluewind@xinu.at';
+
 #$ENV{HTTPS_CA_FILE}    = '/etc/ssl/certs/ca-certificates.crt';
 
 my %templates = (
@@ -50,7 +73,7 @@ sub send_mail {
 
 	open my $fh, "|compose-mail-from-stdin" or die "Failed to run mailer: $!";
 	print $fh "To: $to\n";
-	print $fh "From: bluewind\@archlinux.org\n";
+	print $fh "From: $sender\n";
 	print $fh "Subject: $subject\n";
 	print $fh "\n";
 	print $fh "$body";
