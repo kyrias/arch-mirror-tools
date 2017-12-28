@@ -2,14 +2,19 @@
 
 set -e
 
+# TODO: make path configurable
 cd ~/arch/extra/pacman-mirrorlist/
 svn up
 cd trunk
 
+# TODO: ship upgpkg here?
+# https://git.server-speed.net/users/flo/bin/plain/upgpkg
 upgpkg a
 svn diff mirrorlist | pygmentize
 printf "confirm update (enter)"
 read
+# TODO make build cmd configurable
+# use extra-x86_64-build as default
 ch build 64
 
 corepkg "upstream update"
