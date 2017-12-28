@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+cd ~/arch/extra/pacman-mirrorlist/
+svn up
+cd trunk
+
+upgpkg a
+svn diff mirrorlist | pygmentize
+printf "confirm update (enter)"
+read
+ch build 64
+
+corepkg "upstream update"
+ssh repos.archlinux.org /packages/db-update
