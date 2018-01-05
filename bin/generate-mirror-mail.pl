@@ -119,7 +119,7 @@ while (<STDIN>) {
 					push @out_of_sync, {
 						time => $time,
 						url => $mirror->{url},
-						details_link => "", # TODO
+						details_link => $mirror->{details},
 					};
 				}
 			} else {
