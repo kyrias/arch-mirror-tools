@@ -126,7 +126,7 @@ while (<STDIN>) {
 			#if ($mirror->{last_sync} and $mirror->{completion_pct} < 0.9 and $mirror->{completion_pct} > 0) {
 				push @connection_failed, {
 					url => $mirror->{url},
-					details_link => "", # TODO
+					details_link => $mirror->{details},
 					protocol => $mirror->{protocol},
 				};
 			}
