@@ -1,7 +1,9 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
+use File::Basename;
 use JSON;
+use HTTP::Cookies;
 use WWW::Mechanize;
 use Date::Parse;
 use Date::Format;
@@ -64,7 +66,8 @@ Florian
 	},
 );
 
-my $mech = WWW::Mechanize->new(cookie_jar => {});
+my $cookie_jar = HTTP::Cookies->new(file => dirname($0) . "/../cookie_jar", autosave => 1);
+my $mech = WWW::Mechanize->new(cookie_jar => $cookie_jar);
 
 sub send_mail {
 	my $to = shift;
@@ -136,8 +139,7 @@ while (<STDIN>) {
 		my @last_sync = keys %{{ map { ${$_}{time} => 1 } @out_of_sync }};
 		my $sent_mail = 0;
 
-		# TODO: set $to
-		my $to = '';
+		my $to = $json->{admin_email};
 
 		if (@out_of_sync) {
 			my %values = (
